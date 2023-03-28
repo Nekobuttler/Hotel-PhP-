@@ -139,6 +139,45 @@ function enviarFactura($destinatario, $file)
 
 
 
+function reservasClientes($idCliente){
+
+    
+
+    $result = mostrarReservaPorCliente($idCliente);
+
+    if($result -> num_rows > 0){
+    //$resultData = mysqli_fetch_array($result);
+
+    While($resultData = mysqli_fetch_array($result)){
+
+        echo'
+        <div class="card">
+          <img  class="img-fluid"
+          src="assets/img/hotelRoom.jpg" class="card-img-top" alt="600"  width="400" height="600">
+          <div class="card-body">
+            <h5 class="card-title"> ' .$resultData["descripcion"] .  '</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p> Fecha realizada: ' . $resultData["fecha_reserva"] . ' </p>
+            <p> Fecha de llegada: ' . $resultData["fecha_ingreso"] . ' </p>
+            <p> Fecha de salida: ' . $resultData["fecha_salida"] . ' </p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <a href="#" class="btn btn-primary"> Actualzar </a>
+            <a href="#" class="btn btn-danger"> Eliminar </a>
+                </div>
+       ';
+    }
+    }else{
+            echo '<p>You don' ."'". 't have any bookings yet.</p> ';
+    }
+
+    $result = MostrarReservasModel();
+
+    
+
+}
+
+
+
 
 
 

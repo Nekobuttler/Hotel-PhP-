@@ -112,11 +112,11 @@ function eliminarPerfilModel($idCliente){
 }
 
 
-function MostrarDatosCliente($id){
+function MostrarDatosClienteModel($id){
 
     $instancia = Open();
 
-    $sentencia = "CALL mostrarDatosClienteModel('$id')";
+    $sentencia = "CALL mostrarDatosCliente($id)";
     
     $result = $instancia -> query($sentencia);
 

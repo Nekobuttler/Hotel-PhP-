@@ -75,5 +75,20 @@ function showEmpleados(){
 
 }
 
+function mostrarReservaPorCliente($idCliente){
+    $instancia = Open();
+
+   $sentencia = "CALL reservasCliente('$idCliente')";
+
+   $resultado = $instancia -> query($sentencia);
+
+   Close($instancia);
+   return $resultado; 
+}
+
+
+
+
+
 
 ?>

@@ -122,8 +122,12 @@ function MostrarDatosClienteProfile($id){
 
     if($resultado -> num_rows > 0)
     {
-        echo ' Los datos fueron eliminados ';
+        return mysqli_fetch_array($resultado);
+    }else{
+        
     }
+
+    
 
 }
 
