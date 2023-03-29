@@ -36,22 +36,18 @@ if(isset($_GET["VerificarExisteCorreo"]))
 if(isset($_POST["btnRegistrarCuenta"])){
 
     $correoElectronico = $_POST["correoElectronico"];
-    $contrasenna = $_POST["contrasenna"];
-    $contrasenna_confirm = $_POST["contrasenna_confirm"];
+    $contrasenna = $_POST["contrasenna_confirm"];
     $nombre = $_POST["nombre"];
-    $apellidos = $_POST["apellidos"];
-    $telefono = $_POST["telefono"];
     $tipo_doc = $_POST["tipo_doc"];
     $identificacion = $_POST["identificacion"];
-    $fecha_nac = $_POST["fecha_nac"];
 
-    crearCliente($apellidos , $contrasenna , $correoElectronico, $nombre , $identificacion , $telefono , $tipo_doc , $fecha_nac);
+    crearCliente($correoElectronico , $nombre , $tipo_doc, $identificacion , $contrasenna);
 
 }
 
-function crearCliente($apellidos , $contrasenna , $email, $nombre , $numDocumento , $telefono , $tipo_doc , $fecha_nac){
+function crearCliente($correoElectronico , $nombre , $tipo_doc, $identificacion , $contrasenna){
 
-    $result  = crearUsuarioModel($apellidos , $contrasenna , $email, $nombre , $numDocumento , $telefono , $tipo_doc , $fecha_nac);
+    $result  = crearUsuarioModel($correoElectronico , $nombre , $tipo_doc, $identificacion , $contrasenna);
 
     if($result == true){ 
         header("location:../Views/main.php");

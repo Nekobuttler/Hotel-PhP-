@@ -19,12 +19,11 @@ function MostrarDocumentosModel(){
 
 }
 
-function crearUsuarioModel($apellidos , $contrasenna, $email , $nombre , $numDocumento , $telefono  , $tipoDocumento , $fecha_nac){
+function crearUsuarioModel($email , $nombre , $tipoDocumento, $numDocumento , $contrasenna){
 
     $instancia = Open();
 
-    $sentencia = "CALL crearCliente('$apellidos', '$contrasenna' ,
-    '$email', '$nombre' , '$numDocumento' , $telefono,'$tipoDocumento','$fecha_nac');";
+    $sentencia = "CALL crearCliente('$email','$nombre','$tipoDocumento', '$numDocumento' , '$contrasenna');";
     $resultado = $instancia -> query($sentencia);
 
     Close($instancia);
