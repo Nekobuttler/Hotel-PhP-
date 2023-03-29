@@ -123,8 +123,56 @@ function MostrarDatosClienteProfile($id){
 
 }
 
+if(isset($_POST["btnRecuperarUsuario"]))
+{
+    $correoElectronico = $_POST["correoElectronico"];
+    $contrasenna = ConsultarContrasennaUsuario($correoElectronico);
+
+    EnviarCorreo($correoElectronico, 'Recuperar contraseña', 'Estimado: '.$correoElectronico.', 
+    su contraseña es la siguiente: '.$contrasenna);
+}
 
 
+function ConsultarContrasennaUsuario($correoElectronico){
+
+    $result = ConsultarContrasenna($correoElectronico);
+    $contrasenna = '';
+    
+    if($result -> num_rows > 0){
+        While($resultData = mysqli_fetch_array($result)){
+            $contrasenna = $resultData["contrasenna"]; 
+        }
+    }
+
+    return $contrasenna;
+}
+
+function EnviarCorreo($destinatario, $asunto, $cuerpo)
+{
+    require '../PHPMailer/src/PHPMailer.php';
+    require '../PHPMailer/src/SMTP.php';
+
+    $correoSalida = "reservas_hotel@outlook.es";
+    $contrasennaSalida = "reservas123";
+
+    $mail = new PHPMailer();
+    $mail -> CharSet = 'UTF-8';
+
+    $mail -> IsSMTP();
+    $mail -> Host = 'smtp.office365.com'; // smtp.gmail.com     
+    $mail -> SMTPSecure = 'tls';
+    $mail -> Port = 587; // 465 // 25                               
+    $mail -> SMTPAuth = true;
+    $mail -> Username = $correoSalida;               
+    $mail -> Password = $contrasennaSalida;                                
+    
+    $mail -> SetFrom($correoSalida, "Reservas Hotel");
+    $mail -> Subject = $asunto;
+    $mail -> MsgHTML($cuerpo);   
+    $mail -> AddAddress($destinatario, 'Usuario');
+
+    $mail -> send();
+}
 
 
 
