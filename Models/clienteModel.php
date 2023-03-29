@@ -125,5 +125,18 @@ function MostrarDatosCliente($id){
 
 }
 
+function ConsultarContrasenna($correoElectronico){
+
+    $instancia = Open();
+
+    $sentencia = "CALL consultarContrasenna('$correoElectronico')";
+    
+    $result = $instancia -> query($sentencia);
+
+    Close($instancia);
+
+    return $result;
+
+}
 
 ?>
