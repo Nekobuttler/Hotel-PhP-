@@ -1,8 +1,10 @@
 <?php
     include_once 'utilities.php';
-    include_once '../Controllers/ClienteController.php' ; 
+    include_once '../Controllers/ClienteController.php'; 
+    include_once '../Controllers/ReservasController.php';
 
-   //
+   $result = MostrarDatosClienteProfile($_GET["q"]);
+   //$_SESSION["id"]
 ?>
 
 <!DOCTYPE html>
@@ -31,13 +33,13 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-    
-    
+
+
 </head>
 
 <body>
     <div>
-    <?php 
+        <?php 
     display_header();
     ?>
     </div>
@@ -48,25 +50,29 @@
                 <div class="card">
                     <h1 class="card-header">User Profile</h1>
                     <div class="card-body">
-                        <form>
+                        <form method="POST" action="">
 
                             <div class="">
 
                                 <div class="form-group">
                                     <label for="email">Email:</label>
-                                    <input type="email" id="email" name="email" class="form-control">
+                                    <input type="email" id="email" name="email" class="form-control"
+                                        value="<?php echo $result["email"]?> " readonly="true">
+
+
                                 </div>
                             </div>
                             <div>
                                 <div class="form-group">
                                     <label for="nombre">Nombre:</label>
-                                    <input type="text" id="nombre" name="nombre" class="form-control">
+                                    <input type="text" id="nombre" name="nombre" class="form-control"
+                                        value="<?php echo $result["Nombre"]?> " readonly="true">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="apellidos">Apellidos:</label>
                                     <input type="text" id="apellidos" name="apellidos" class="form-control"
-                                        placeholder="">
+                                        placeholder="" value="<?php echo $result["Apellidos"]?> " readonly="true">
                                 </div>
                             </div>
 
@@ -79,40 +85,45 @@
 
                             <div class="form-group">
                                 <label for="identity">Identidad:</label>
-                                <input type="text" id="identity" name="identity" class="form-control"
-                                    placeholder="">
+                                <input type="text" id="identity" name="identity" class="form-control" placeholder=""
+                                    value="<?php echo $result["num_documento"]?> " readonly="true">
                             </div>
 
                             <div class="form-group">
                                 <label for="telefono">Telefono:</label>
-                                <input type="tel" id="telefono" name="telefono" class="form-control"
-                                    placeholder="">
+                                <input type="tel" id="telefono" name="telefono" class="form-control" placeholder=""
+                                    value="<?php echo $result["telefono"]?> " >
                             </div>
 
                             <div class="form-group">
                                 <label for="direccion">Direccion:</label>
                                 <input type="text" id="direccion" name="direccion" class="form-control"
-                                    placeholder="Enter your lastname">
+                                    placeholder="Enter your lastname" value="<?php echo $result["direcccion"]?>"
+                                    >
                             </div>
 
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <select class="form-control form-control-user" id="rol" name="rol">
-                                                <?php
+                                <select class="form-control form-control-user" id="rol" name="rol">
+                                    <?php
                                                     //VerPerfiles($resultado["TipoUsuario"]);
                                                 ?>
-                                            </select>
-                                        </div>
+                                </select>
+                            </div>
 
+                                        
+                                       
                             <div class="form-group">
                                 <label for="fehca_nac">Fecha Nacimiento:</label>
-                                <input type="text" id="fehca_nac" name="fehca_nac" class="form-control"
-                                    placeholder="">
+                                <input type="date" id="fehca_nac" name="fehca_nac" class="form-control"
+                                    value="<?php echo  $result["fecha_nac"]->format('d-m-Y')  ?> "  >
+
+                                    
                             </div>
 
                             <div class="form-group">
                                 <label for="password">Password:</label>
                                 <input type="password" id="password" name="password" class="form-control"
-                                    placeholder="">  <?php // Aca lo que puede hacerse es que solo se muestren puntitos y que 
+                                    placeholder=""> <?php // Aca lo que puede hacerse es que solo se muestren puntitos y que 
                                                             //cuando lo presione le pida si esta seguro y de una le pida 
                                                             // la contrasena ?>
                             </div>
@@ -122,10 +133,12 @@
                                 <label for="photo">Photo:</label>
                                 <input type="file" id="photo" name="photo" class="form-control-file">
                             </div>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <input   id ="actCliente" name="actCliente" class="btn btn-primary" type ="submit" value="Save Changes"  />
                         </form>
                         <div class="delete mt-3">
-                            <button id="delete-account" class="btn btn-danger">Delete Account</button>
+                        <input  class="btn btn-danger" id ="delCliente" type ="submit" value="Delete" 
+                        href='#confirmEliminar' data-backdrop='static' data-keyboard='false' data-toggle='modal'
+                                data-target='#confirmEliminar' />
                         </div>
                     </div>
                 </div>
@@ -137,12 +150,54 @@
                 <div class="card">
                     <h1 class="card-header">Bookings</h1>
                     <div class="card-body">
-                        <p>You don't have any bookings yet.</p>
+                        <div class="card-deck">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <?php reservasClientes($_SESSION["id"]); //$_GET["q"] ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    
+
+    
+    <div class="modal fade" id="confirmEliminar" name="confirmEliminar" 
+        aria-hidden="true" data-backdrop="static" data-keyboard="false"  
+        aria-labelledby="Confirmacion"
+            tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ToggleLabel">Confirmacion de desactivacion</h5>
+                        <button type="button" class="X lg" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                            <p> Quiere desactivar el siguiente usuario? </p>
+                            
+                            <input type="hidden" id="consecutivo" name="consecutivo">
+
+                            <p id="nombreUser" name="nombreUser"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" 
+                        name="desacConfirm"
+                        id="desacConfirm"
+                        data-bs-target="" data-bs-toggle="modal"
+                        data-dismiss="modal"
+                        onclick="desacConfirm" 
+                        >Confirmar Desactivacion</button>
+                            
+                        <button class="btn btn-primary" data-bs-target="" data-bs-toggle="modal"
+                            data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

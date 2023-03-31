@@ -71,4 +71,21 @@ function estadoHabitacionModel(){
 }
 
 
+function actualizarHabitacionModel($idHabitacion, $numeroHabitacion, $piso, $estadoHabitacion, $tipoHabitacion) {
+    $instancia = Open();
+    $sentencia = "CALL actualizarHabitacion($idHabitacion, '$numeroHabitacion', '$piso', $estadoHabitacion, $tipoHabitacion);";
+    $resultado = $instancia->query($sentencia);
+    Close($instancia);
+    return $resultado;
+}
+
+function deleteHabitacionModel($idHabitacion) {
+    $instancia = Open();
+    $sentencia = "CALL deleteHabitacion($idHabitacion);";
+    $resultado = $instancia->query($sentencia);
+    Close($instancia);
+    return $resultado;
+}
+
+// ...
 ?>

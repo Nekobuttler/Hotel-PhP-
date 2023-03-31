@@ -39,6 +39,7 @@
 
 <body>
 
+
     <?php 
     display_header();
     ?>
@@ -66,40 +67,42 @@
                                 <h1 class="h4 text-gray-900 mb-4">Actualizar Datos</h1>
                             </div>
                             <form action="" method="post">
-                                <div class="form-row">
+                                <input type="hidden" name="idHabitacion" value="<?php echo $idHabitacion ?>">
+                                    <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="nHabitacion">Numero Habitacion</label>
-                                        <input type="number" class="form-control" name="nHabitacion" id="nHabitacion" placeholder="Digite el numero
-                                                                                                                de la habitacion">
+                                        <input type="number" class="form-control" name="nHabitacion" id="nHabitacion" placeholder="Digite el numero de la habitacion" value="<?php echo $numeroHab ?>">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="pisoHab">Piso de la habitacion</label>
-                                        <input type="number" class="form-control" name="pisoHab" id="pisoHab"
-                                            placeholder="Digite le piso donde se encuentra la habitacion">
+                                        <input type="number" class="form-control" name="pisoHab" id="pisoHab" placeholder="Digite el piso donde se encuentra la habitacion" value="<?php echo $pisoHab ?>">
                                     </div>
                                 </div>
-                                
+                                <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="estadoHab">Estado de la habitacion</label>
-                                        <select id="estadoHab" name ="estadoHab"class="form-control">
-                                        <?php
-                                           	estadoHabitacion();
-                                           ?>
+                                        <select id="estadoHab" name ="estadoHab" class="form-control">
+                                            <?php
+                                            estadoHabitacion($estadoHabitacion);
+                                            ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="tipoHab">Tipo de habitacion</label>
                                         <select id="tipoHab" name ="tipoHab" class="form-control">
-                                           <?php
-                                           	tiposHabitacion();
-                                           ?>
+                                            <?php
+                                            tiposHabitacion($tipoHab);
+                                            ?>
                                         </select>
+                                     </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <input type="submit" class="btn btn-primary btn-user btn-block" value="Actualizar Habitacion" name="btnActualizarHab">
                                     </div>
-                                    
+                                    <div class="form-group col-md-6">
+                                        <input type="submit" class="btn btn-danger btn-user btn-block" value="Eliminar Habitacion" name="btnEliminarHab">
+                                    </div>
                                 </div>
-                            
-                                <input type="submit" class="btn btn-primary btn-user btn-block" value="Guardar Habitacion" 
-                                        id="btnGuardarHab" name="btnGuardarHab">
                             </form>
                         </div>
                     </div>

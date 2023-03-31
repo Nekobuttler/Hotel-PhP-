@@ -56,16 +56,39 @@ function crearCliente($correoElectronico , $nombre , $tipo_doc, $identificacion 
     }
 }
 
+
+
+///Update //////////
+if(isset($_POST["actCliente"])){
+
+    $correoElectronico = $_POST["email"];
+    $nombre = $_POST["nombre"];
+    $apellidos = $_POST["apellidos"];
+    $tipoDoc =  1;                               //$_POST["tipo_doc"];
+    $identificacion = $_POST["identity"];
+    $telefono = $_POST["telefono"];
+    $direccion = $_POST["direccion"];
+    $fecha_nac = $_POST["fehca_nac"];
+    $password = $_POST["password"];
+
+    actualizarPerfil($_SESSION["id"],$apellidos , $password , 
+    $correoElectronico, $nombre , $identificacion , $telefono , $tipoDoc , $fecha_nac);
+
+}
+
 function actualizarPerfil($idCliente,$apellidos , $contrasenna , $email, $nombre , $numDocumento , $telefono , $tipo_doc , $fecha_nac){
 
     $result  = actualizarPerfilModel($idCliente,$apellidos , $contrasenna , $email, $nombre , $numDocumento , $telefono , $tipo_doc , $fecha_nac);
 
     if($result == true){ 
-        header("location:../Views/main.php");
+        header("location:../Views/profile2.php?q=".$_SESSION["id"] . '"');  
     }else{
-        header("location:../Views/RegistroClientes.php");
+        // Mostrar modal de error o un popUp4
+        echo 'Error' ;
+        header("location:../Views/profile2.php?q=".$_SESSION["id"] . '"');
     }
 }
+
 
 
 function eliminarPerfil(){
@@ -102,26 +125,6 @@ function mostrarClientes($tipoUsuario){
 }
 }
 
-function BorrarCliente($consecutivo){
-    
-    $resultado = eliminarPerfilModel($consecutivo);
-
-    if($resultado -> num_rows > 0)
-    {
-        echo ' Los datos fueron eliminados ';
-    }
-}
-
-function MostrarDatosClienteProfile($id){
-    
-    $resultado = MostrarDatosClienteModel($id);
-
-    if($resultado -> num_rows > 0)
-    {
-        echo ' Los datos fueron eliminados ';
-    }
-
-}
 
 if(isset($_POST["btnRecuperarUsuario"]))
 {
@@ -174,6 +177,32 @@ function EnviarCorreo($destinatario, $asunto, $cuerpo)
     $mail -> send();
 }
 
+
+function BorrarCliente($consecutivo){
+    
+    $resultado = eliminarPerfilModel($consecutivo);
+
+    if($resultado -> num_rows > 0)
+    {
+        echo ' Los datos fueron eliminados ';
+    }
+}
+
+
+function MostrarDatosClienteProfile($id){
+    
+    $resultado = MostrarDatosClienteModel($id);
+
+    if($resultado -> num_rows > 0)
+    {
+        return mysqli_fetch_array($resultado);
+    }else{
+        
+    }
+
+    
+
+}
 
 
 ?>

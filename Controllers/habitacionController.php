@@ -86,7 +86,25 @@ function tiposHabitacion(){
 
 }
 
+function actualizarHabitacion($idHabitacion, $numeroHabitacion, $piso, $estadoHabitacion, $tipoHabitacion) {
+    $resultado = actualizarHabitacionModel($idHabitacion, $numeroHabitacion, $piso, $estadoHabitacion, $tipoHabitacion);
 
+    if ($resultado == true) {
+        header("location: ../Views/main.php");
+    } else {
+        header("location:../Views/addHabitacion.php");
+    }
+}
 
+function DeleteHabitacion($idHabitacion) {
+    $resultado = DeleteHabitacionModel($idHabitacion);
 
+    if ($resultado == true) {
+        header("location: ../Views/main.php");
+    } else {
+        header("location:../Views/addHabitacion.php");
+    }
+}
+
+// ...
 ?>

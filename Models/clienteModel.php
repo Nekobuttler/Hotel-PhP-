@@ -139,4 +139,22 @@ function ConsultarContrasenna($correoElectronico){
 
 }
 
+
+function MostrarDatosClienteModel($id){
+
+    $instancia = Open();
+
+    $sentencia = "CALL mostrarDatosCliente($id)";
+    
+    $result = $instancia -> query($sentencia);
+
+    Close($instancia);
+
+    return $result;
+
+}
+
+
+
+
 ?>
