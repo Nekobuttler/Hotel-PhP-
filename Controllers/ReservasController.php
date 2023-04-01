@@ -52,7 +52,18 @@ if($result -> num_rows > 0){
         echo "<td>" .  $resultData["idHabitacion"]. "</td>";
         echo "<td>" .  $resultData["numeroPersonas"]. "</td>";
         echo "<td>" .  $resultData["tipoReserva"]. "</td>";
+        echo "<td>" . ' <form method="post">  <input  id="idReserva" name="idReserva" type="hidden" 
+        value="'.$resultData["idReserva"] .'" /> <input  class="btn btn-danger" id ="delReserva" 
+        name="delReserva" type ="submit" value="Delete" 
+        href="#confirmEliminar" data-backdrop="static" data-keyboard="false" data-toggle="modal"
+                data-target="#confirmEliminar"  
+                
+                onClick=EliminarHab('. $resultData["idReserva"]  .') /> </form> 
+                '. "</td>";
+        echo "<td>"  . '
+        <a href="actualizarReserva.php?q='.$resultData["idReserva"] . '" class="btn btn-primary">Actualizar</a>' . "</td>";
         echo "</tr>";
+       
 
     }
 }else{
@@ -182,6 +193,48 @@ data-id="' . $resultData["idReserva"] . '> Eliminar </a>*/
     
 
 }
+
+function actualizarReserva($idReserva, $fechIng, $fechaReser, $fechaSal, $idCliente, $idEmpleado, $idHabitacion, $numeroPersonas, $tipoReserva) {
+    $resultado = actualizarHabitacionModel($idReserva, $fechIng, $fechaReser, $fechaSal, $idCliente, $idEmpleado, $idHabitacion, $numeroPersonas, $tipoReserva);
+
+    if ($resultado == true) {
+        header("location: ../Views/main.php");
+    } else {
+        header("location:../Views/addHabitacion.php");
+    }
+}
+
+
+
+if(isset($_POST["delHabitacion"])){
+
+    $nHabitacion = $_POST["idhabitacion"];
+    DeleteHabitacion($nHabitacion);
+
+}
+
+
+
+
+
+
+function DeleteHabitacion($idHabitacion) {
+    $resultado = DeleteHabitacionModel($idHabitacion);
+
+    if ($resultado == true) {
+        header("location: ../Views/main.php");
+    } else {
+        header("location:../Views/addHabitacion.php");
+    }
+}
+
+//Conectar al model y realizar consulta
+function mostrarDatosReserva(){
+
+
+}
+
+
 
 
 

@@ -46,6 +46,7 @@
     <div class="container-fluid d-flex justify-content-center mt-5 pt-5">
     <div>
 <a href="addHabitacion.php" class="getstarted">Agregar Habitacion</a>
+
 </div>
         <section class="col-lg-10 pt-4 pt-lg-0 ">
             <div id="content-wrapper" class="d-flex flex-column">
@@ -100,6 +101,9 @@
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="JavaScript/funcionesEliminarHab.js"></script>
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+        <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>

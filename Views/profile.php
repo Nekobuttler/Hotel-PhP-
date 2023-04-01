@@ -79,11 +79,7 @@
                             placeholder="Enter your password">
                     </div>
 
-
-                    <div class="form-group">
-                        <label for="photo">Photo:</label>
-                        <input type="file" id="photo" name="photo" class="form-control-file">
-                    </div>
+                    
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>
                 <div class="delete mt-3">

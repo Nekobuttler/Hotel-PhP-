@@ -86,7 +86,7 @@ function actualizarPerfilModel($idCliente,$apellidos , $contrasenna, $email , $n
     $instancia = Open();
 
     $sentencia = "CALL actualizarCliente('$idCliente','$apellidos' , '$contrasenna', '$email' , '$nombre' , '$numDocumento '
-    , '$telefono'  , '$tipoDocumento', '$fecha_nac')";
+    , '$telefono'  , $tipoDocumento, '$fecha_nac')";
     
     $result = $instancia -> query($sentencia);
 

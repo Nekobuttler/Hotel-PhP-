@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3308
--- Tiempo de generación: 25-03-2023 a las 16:57:51
+-- Tiempo de generación: 01-04-2023 a las 03:56:17
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -30,18 +30,48 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizarCliente` (IN `pidCliente`
 UPDATE cliente SET
 cliente.Apellidos = papellidos , cliente.contrasenna = pcontrasenna , 
 cliente.email = pemail , cliente.Nombre = pnombre , cliente.num_documento = pnumDocumento , 
-cliente.telefono = ptelefono , cliente.tipo_documento = ptipoDocumento , cliente.fecha_nac = pfehcaNac
+cliente.telefono = ptelefono , cliente.tipo_documento = ptipoDocumento , cliente.fecha_nac = pfechaNac
 WHERE id_cliente = pidCliente;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `crearCliente` (IN `pApellidos` VARCHAR(80), IN `pContrasenna` VARCHAR(14), IN `pEmail` VARCHAR(80), IN `pNombre` VARCHAR(30), IN `pNum_documento` VARCHAR(12), IN `pTelefono` VARCHAR(12), IN `pTipoDocumento` VARCHAR(20), IN `pfech_nac` DATE)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizarHabitacion` (IN `pidHabitacion` INT(12), IN `pnumeroHabitacion` INT, IN `ppiso` INT, IN `ptipoHabitacion` INT, IN `pestadoHabitacion` INT)   BEGIN
+  UPDATE habitacion
+  SET
+    numeroHabitacion = pnumeroHabitacion,
+    piso = ppiso,
+    tipoHabitacion = ptipoHabitacion,
+    estadoHabitacion = pestadoHabitacion
+  WHERE
+    idHabitacion = pidHabitacion;
+END$$
 
-INSERT INTO cliente(Apellidos,contrasenna,email,nombre,num_documento,telefono,tipoUsuario,tipo_documento,fecha_nac)
-VALUES(
-pApellidos,pContrasenna,pEmail,pNombre,pNum_documento,pTelefono,2,pTipoDocumento,pfech_nac
-);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `consultarContrasenna` (IN `_pcorreoElectronico` VARCHAR(250))   BEGIN
+	SELECT contrasenna FROM cliente
+    where email = _pcorreoElectronico;
+END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `crearCliente` (IN `_pcorreoElectronico` VARCHAR(250), IN `_pnombre` VARCHAR(30), IN `_ptipoDocumento` INT, IN `_pnumeroDocumento` MEDIUMTEXT, IN `_pcontrasenna` VARCHAR(250))   BEGIN
+	INSERT INTO `cliente`(`Nombre`
+                          , `Apellidos`
+                          , `fecha_nac`
+                          , `tipo_documento`
+                          , `num_documento`
+                          , `telefono`
+                          , `email`
+                          , `direcccion`
+                          , `tipoUsuario`
+                          , `contrasenna`)
+                          VALUES (_pnombre
+                                  ,''
+                                  ,''
+                                  ,_ptipoDocumento
+                                  ,_pnumeroDocumento
+                                  ,''
+                                  ,_pcorreoElectronico
+                                  ,''
+                                  ,2
+                                  ,_pcontrasenna);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `crearEmpleado` (IN `pNombre` VARCHAR(80), IN `pApellidos` VARCHAR(80), IN `pEmail` VARCHAR(80), IN `pNum_documento` VARCHAR(11), IN `pPuesto` VARCHAR(50), IN `pSueldo` DECIMAL, IN `pTelefono` VARCHAR(12), IN `pTipoUsuario` TINYINT, IN `pTipoDocumento` VARCHAR(30), IN `pContrasenna` VARCHAR(14))   BEGIN
@@ -78,6 +108,13 @@ DELETE FROM cliente where idCliente = pidCliente;
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteHabitacion` (IN `pidHabitacion` INT(12))   BEGIN 
+ DELETE FROM habitacion
+    WHERE
+        habitacion.idHabitacion = pidHabitacion;
+        
+        END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteReserva` (IN `pIdReserva` INT)   BEGIN
 DELETE FROM reserva WHERE reserva.idReserva = pIdReserva;END$$
 
@@ -87,6 +124,22 @@ SELECT * FROM estadohabitaciom;
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `mostrarDatosCliente` (IN `pidCliente` INT)   BEGIN 
+SELECT 
+	Apellidos,direcccion, email, fecha_nac,email,
+    fecha_nac,id_cliente,Nombre,num_documento,
+    telefono,U.nombreTipoUsuario , D.NombreTipo
+	
+    from cliente C 
+    INNER JOIN tipodocumentos D 
+    ON D.idTipoDocumento = C.tipo_documento
+    INNER JOIN tiposusuarios U ON C.tipoUsuario = U.idTipoUsuario
+    WHERE C.id_cliente = pidCliente
+    ;
+    
+    
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `MostrarHabitaciones` ()   BEGIN
 
 SELECT * FROM habitacion; 
@@ -94,6 +147,28 @@ SELECT * FROM habitacion;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `mostrarTipoDocumentos` ()   SELECT * FROM tipodocumentos$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservasCliente` (IN `pidCliente` INT(12))   BEGIN
+
+SELECT R.idReserva as idReserva,
+R.idHabitacion , 
+/*CONCAT(E.nombre , " " , E.apellidos) AS Empleado,*/
+CONCAT(C.Nombre , " " , C.Apellidos) AS Cliente,
+R.numeroPersonas,
+T.descripcion ,
+T.costoPorNoche,
+R.fecha_reserva ,
+R.fecha_ingreso ,
+R.fecha_salida,
+R.estado
+FROM reserva R 
+INNER JOIN cliente C ON C.id_cliente = R.idCliente 
+INNER JOIN tiporeserva T ON T.idTipoReserva = R.TipoReserva 
+INNER JOIN habitacion H ON H.idHabitacion = R.idHabitacion 
+/*INNER JOIN empleado E ON E.idempleado = R.idEmpleado*/
+WHERE R.idCliente = pidCliente
+; 
+END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `showEmpleados` ()   BEGIN
 
@@ -141,10 +216,10 @@ WHERE empleado.num_documento = pIdentificacion
 ;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `VerificarExisteCorreo` (IN `pCorreoElectronico` VARCHAR(80))   BEGIN 
-SELECT * FROM empleado ,cliente
-WHERE pCorreoElectronico = empleado.email or cliente.email;
-END$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `VerificarExisteCorreo` (IN `pCorreoElectronico` VARCHAR(80))   SELECT empleado.email as emailEmpleado,
+cliente.email as emailCliente
+FROM empleado ,cliente
+WHERE empleado.email = pCorreoElectronico or cliente.email =pCorreoElectronico$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `verReservas` ()   BEGIN 
 
@@ -183,10 +258,13 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`id_cliente`, `Nombre`, `Apellidos`, `fecha_nac`, `tipo_documento`, `num_documento`, `telefono`, `email`, `direcccion`, `tipoUsuario`, `contrasenna`) VALUES
-(2, 'Cristian ', 'Miranda Vega', '2002-06-17', 1, '118450472', '72618399', 'cristiaw85@gmail.com', 'adasd', 1, '123456'),
+(2, 'Cristian   ', 'Miranda Vega  ', '0000-00-00', 1, '118450472   ', '72618399  ', 'cristiaw85@gmail.com', 'adasd', 1, '123'),
 (3, 'ad', 'sadad', '2023-03-23', 2, '31312dsa', '72618399', 'cristiaw88@gmail.com', NULL, 2, '111222'),
 (4, 'dasads', 'dasd', '2023-03-10', 1, '31221312', '231314213', 'cristiaw88@gmail.com', NULL, 2, '111222'),
-(5, 'Sebastian ', 'Miranda Vega', '2023-03-12', 1, '12312313321', '13123141', 'cristiaw89@gmail.com', NULL, 2, '111222');
+(5, 'Sebastian ', 'Miranda Vega', '2023-03-12', 1, '12312313321', '13123141', 'cristiaw89@gmail.com', NULL, 2, '111222'),
+(6, 'Andres Miranda     ', '    ', '0000-00-00', 1, '31232213321 ', ' 43124132  ', 'cristiaw87@gmail.com', '', 2, ''),
+(7, 'Pedro Perez  ', ' Parce3123143121 ', '2023-03-11', 1, '3123143121  ', '72618392', 'ppppp@gmail.com', '', 2, '123'),
+(8, 'Cristian ', ' Miranda Vega ', '2023-03-19', 1, '118450472  ', '72618399', 'cristiaw80@gmail.com', '', 2, '123');
 
 -- --------------------------------------------------------
 
@@ -314,7 +392,10 @@ CREATE TABLE `reserva` (
 INSERT INTO `reserva` (`idReserva`, `idHabitacion`, `idCliente`, `idEmpleado`, `tipoReserva`, `fecha_reserva`, `fecha_ingreso`, `fecha_salida`, `estado`, `numeroPersonas`) VALUES
 (1, 1, 2, 1, 1, '0000-00-00', '0000-00-00', '0000-00-00', 'RESERVADO', 3),
 (4, 1, 2, 1, 1, '2023-03-24', '2023-03-24', '2023-03-24', 'RESERVADO', 4),
-(5, 6, 3, 1, 1, '2023-03-30', '2023-03-25', '2023-03-30', 'RESERVADO', -5);
+(5, 6, 3, 1, 1, '2023-03-30', '2023-03-25', '2023-03-30', 'RESERVADO', -5),
+(6, 1, 2, 1, 1, '2023-03-18', '2023-03-12', '2023-03-18', 'RESERVADO', 3),
+(7, 5, 7, 1, 1, '2023-03-12', '2023-03-18', '2023-03-12', 'RESERVADO', 4),
+(8, 2, 8, 1, 1, '2023-03-31', '2023-03-05', '2023-03-31', 'RESERVADO', 4);
 
 -- --------------------------------------------------------
 
@@ -484,7 +565,7 @@ ALTER TABLE `tiposusuarios`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
@@ -502,13 +583,13 @@ ALTER TABLE `estadohabitaciom`
 -- AUTO_INCREMENT de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
-  MODIFY `idHabitacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idHabitacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `tipodocumentos`

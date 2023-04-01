@@ -68,7 +68,7 @@ if(isset($_POST["actCliente"])){
     $identificacion = $_POST["identity"];
     $telefono = $_POST["telefono"];
     $direccion = $_POST["direccion"];
-    $fecha_nac = $_POST["fehca_nac"];
+    $fecha_nac = $_POST["fehca_nac"]; 
     $password = $_POST["password"];
 
     actualizarPerfil($_SESSION["id"],$apellidos , $password , 
@@ -76,16 +76,18 @@ if(isset($_POST["actCliente"])){
 
 }
 
-function actualizarPerfil($idCliente,$apellidos , $contrasenna , $email, $nombre , $numDocumento , $telefono , $tipo_doc , $fecha_nac){
+function actualizarPerfil($idCliente,$apellidos , $contrasenna , $email, $nombre , 
+$numDocumento , $telefono , $tipo_doc , $fecha_nac){
 
-    $result  = actualizarPerfilModel($idCliente,$apellidos , $contrasenna , $email, $nombre , $numDocumento , $telefono , $tipo_doc , $fecha_nac);
+    $result  = actualizarPerfilModel($idCliente,$apellidos , $contrasenna , $email,
+     $nombre , $numDocumento , $telefono , $tipo_doc , $fecha_nac);
 
     if($result == true){ 
-        header("location:../Views/profile2.php?q=".$_SESSION["id"] . '"');  
+        header("location:../Views/profile2.php?q=' ". $_SESSION["id"] ."'");  
     }else{
         // Mostrar modal de error o un popUp4
         echo 'Error' ;
-        header("location:../Views/profile2.php?q=".$_SESSION["id"] . '"');
+        header("location:../Views/profile2.php?q=' ". $_SESSION["id"] ."'" );
     }
 }
 
@@ -117,7 +119,18 @@ function mostrarClientes($tipoUsuario){
             echo "<td>" .  $resultData["direccion"]. "</td>";
             echo "<td>" .  $resultData["nombreTipoUsuario"]. "</td>";
             echo "<td>" .  $resultData["fecha_nac"]. "</td>";
+            echo "<td>" . ' <form method="post">  <input  id="idhabitacion" name="idhabitacion" type="hidden" 
+            value="'.$resultData["id_cliente"] .'" /> <input  class="btn btn-danger" id ="delHabitacion" 
+            name="delHabitacion" type ="submit" value="Delete" 
+            href="#confirmEliminar" data-backdrop="static" data-keyboard="false" data-toggle="modal"
+                    data-target="#confirmEliminar"  
+                    
+                    onClick=EliminarHab('. $resultData["id_cliente"]  .') /> </form> 
+                    '. "</td>";
+            echo "<td>"  . '
+            <a href="actualizarReserva.php" class="btn btn-primary">Actualizar</a>' . "</td>";
             echo "</tr>";
+           
         }
         
 }else{

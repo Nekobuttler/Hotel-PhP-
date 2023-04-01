@@ -6,18 +6,18 @@ if(session_status() == PHP_SESSION_NONE){
   }
 }
 
-function display_profile(){
+  function display_profile(){
 
-  if($_SESSION["email"] != null){
+    if($_SESSION["email"] != null){
 
-    $name =  $_SESSION["Nombre"] . " " . $_SESSION["Apellidos"] . " ".$_SESSION["id"] ;
-   
-    return $name;
+      $name =  $_SESSION["Nombre"] . " " . $_SESSION["Apellidos"] ;
     
-  }else{
-    header("location: login.php");
+      return $name;
+      
+    }else{
+      header("location: login.php");
+    }
   }
-}
 
 
 function display_header(){
@@ -26,18 +26,19 @@ function display_header(){
     <header id="header" class="fixed-top d-flex align-items-center ">
       <div class="container d-flex align-items-center">
   
-        <h1 class="logo me-auto"><a href="index.html">Sailor</a></h1>
+        <h1 class="logo me-auto"><a href="main.php">Sailor</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <!-- <a href="main.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
   
       
         <nav id="navbar" class="navbar">
           <ul>
             <li><a href="main.php" class="active">Home</a></li>
   
-            
+            <!-- 
             <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
               <ul>
+              
                 <li><a href="about.php">About</a></li>
                 <li><a href="team.php">Team</a></li>
                 <li><a href="testimonials.php">Testimonials</a></li>
@@ -52,19 +53,21 @@ function display_header(){
                     
                   </ul>
                 </li>
+                
               </ul>
-            </li>
-            <li><a href="profile2.php?q='.$_SESSION["id"] . '">' . display_profile() .' </a></li>
-            <li><a href="testimonials.php">Testimonials </a></li>
-            <li><a href="services.php">Services</a></li>
+            </li>-->
+           
+            <!-- <li><a href="testimonials.php">Testimonials </a></li> -->
+            <!--   <li><a href="services.php">Services</a></li> -->
             <li><a href="mostrarUsuarios.php">Usuarios</a></li>
-            <li><a href="pricing.php">Pricing</a></li>
+           <!-- <li><a href="pricing.php">Pricing</a></li> -->
             <li><a href="ReservasList.php">Reservas</a></li>
             
             
-            <li><a href="contact.php">Contact</a></li>
-            <li><a href="login.php" class="getstarted">Iniciar Sesion</a></li>
+            <!-- <li><a href="contact.php">Contact</a></li> -->
+            <li><a href="profile2.php?q='.$_SESSION["id"] . '">' . display_profile() .' </a></li>
             <li><a href="../Controllers/cerrarSesionController.php" class="getstarted">Cerrar Sesion </a></li>
+            
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->

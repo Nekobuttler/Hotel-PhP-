@@ -88,6 +88,24 @@ function mostrarReservaPorCliente($idCliente){
    return $resultado; 
 }
 
+function ActualizarReservaModel($idReserva, $fechIng, $fechaReser, $fechaSal, $idCliente, $idEmpleado, $idHabitacion, $numeroPersonas, $tipoReserva)
+{ 
+    $enlace = Open();
+
+    $procedimiento = "call ActualizarReserva($idReserva, '$fechIng', '$fechaReser', '$fechaSal', $idCliente, $idEmpleado, $idHabitacion, '$numeroPersonas', $tipoReserva);";
+    $enlace -> query($procedimiento);
+
+    Close($enlace);
+}
+
+function deleteReservaModel($idReserva) {
+    $instancia = Open();
+    $sentencia = "CALL deleteReserva($idReserva);";
+    $resultado = $instancia->query($sentencia);
+    Close($instancia);
+    return $resultado;
+}
+
 
 
 

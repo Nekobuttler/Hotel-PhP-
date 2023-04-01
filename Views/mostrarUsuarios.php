@@ -45,7 +45,7 @@
    
     <div class="container-fluid d-flex justify-content-center mt-5 pt-5">
     <div>
-<a href="addReserva.php" class="getstarted">Agregar Reserva</a>
+<a href="addReserva.php" class="getstarted">Agregar Usuario</a>
 </div>
         <section class="col-lg-10 pt-4 pt-lg-0 ">
             <div id="content-wrapper" class="d-flex flex-column">
