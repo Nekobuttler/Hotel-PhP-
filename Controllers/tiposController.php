@@ -60,11 +60,11 @@ if($result -> num_rows > 0){
             ';
             if($_SESSION["privilegios"] == 2 ){
                 echo'
-            <a href="#"><button class="btn btn-primary"value="Reservar Ahora" >Reservar Ahora </button>';
+            <a href="addReserva.php"><button class="btn btn-primary"value="Reservar Ahora" >Reservar Ahora </button>';
             }else{
-                echo'
+                /*echo'
                 <a href="#"><button class="btn btn-primary"value="Actualizar" >Reservar Ahora </button>
-                <a href="#"><button class="btn btn-primary"value="Borrar" >Reservar Ahora </button>';
+                <a href="#"><button class="btn btn-primary"value="Borrar" >Reservar Ahora </button>';*/
             }
                
                     

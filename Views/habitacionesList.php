@@ -85,10 +85,10 @@
                                 <thead>
                                     <tr>
 
-                                        <th>Numero Habitacion</th>
+                                        <th>Número</th>
                                         <th>Estado</th>
                                         <th>Piso</th>
-                                        <th>Tipo de Habitacion</th>
+                                        <th>Tipo de Habitación</th>
                                         <th></th>
                                     </tr>
                                 </thead>

@@ -63,7 +63,14 @@
                     <div class="col-lg-8">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Actualizar Datos</h1>
+                                <?php
+                                if($_SESSION["privilegios"] == '1'){
+                                    echo '<h1 class="h4 text-gray-900 mb-4">Actualizar Datos</h1>';
+                                }else{
+                                    echo '<h1 class="h4 text-gray-900 mb-4">Agregar Reserva</h1>';
+                                }
+                                ?>
+                                
                             </div>
                             <form action="" method="post">
                                 <div class="form-row">
@@ -73,19 +80,19 @@
                                                                                                                 cuando desea ingresar al hotel">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="fehcaSa">Fecha de Salida </label>
+                                        <label for="fehcaSa">Fecha de salida </label>
                                         <input type="date" class="form-control" name="fehcaSa" id="fehcaSa" placeholder="Seleccione la fecha de 
                                                                                                                 cuando desea su salida del hotel">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="numPer">Seleccione el numero de personas que habran</label>
+                                        <label for="numPer">Seleccione el número de personas que habran</label>
                                         <input type="number" class="form-control" name="numPer" id="numPer"
                                             placeholder="Digite el numero de personas">
                                     </div>
                                
                                 
                                     <div class="form-group col-md-4">
-                                        <label for="numHabitacion">Numero de habitacion</label>
+                                        <label for="numHabitacion">Número de habitación</label>
                                         <select id="numHabitacion" name ="numHabitacion"class="form-control">
                                         <?php
                                            	listaHabitaciones();

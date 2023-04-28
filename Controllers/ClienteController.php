@@ -167,8 +167,8 @@ function EnviarCorreo($destinatario, $asunto, $cuerpo)
     require '../PHPMailer/src/PHPMailer.php';
     require '../PHPMailer/src/SMTP.php';
 
-    $correoSalida = "reservas_hotel@outlook.es";
-    $contrasennaSalida = "reservas123";
+    $correoSalida = "hotelbuenavista23@outlook.es";
+    $contrasennaSalida = "941M1edt#FJB";
 
     $mail = new PHPMailer();
     $mail -> CharSet = 'UTF-8';

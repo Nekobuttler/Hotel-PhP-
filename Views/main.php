@@ -35,7 +35,7 @@
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
 
-        <link href="assets/css/stylesCards.scss" rel="stylesheet">
+    <link href="assets/css/stylesCards.scss" rel="stylesheet">
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -63,10 +63,15 @@
     ?>
 
     <div class="container-fluid d-flex justify-content-center mt-5 pt-5">
-        <div>
-            <a href="addHabitacion.php" class="getstarted">Agregar Habitacion</a>
+        <?php 
+        if($_SESSION["privilegios"] == '1'){
+            echo '<div>
+                        <a href="addHabitacion.php" class="getstarted">Agregar Habitacion</a>
 
-        </div>
+                    </div>';
+        }
+        ?>
+
         <section class="col-lg-10 pt-4 pt-lg-0 ">
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
@@ -82,15 +87,15 @@
 
                     <div class="container-fluid">
 
-                    <div class="container pb-6 mt-5">
+                        <div class="container pb-6 mt-5">
 
-                    
-                    <?php
+
+                            <?php
                                   mostrarTipoReserva();
                                 ?>
 
 
-</div>
+                        </div>
                         <!--
                         <div class="row">
 
