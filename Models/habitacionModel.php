@@ -101,5 +101,17 @@ function deleteHabitacionModel($idHabitacion) {
     return $resultado;
 }
 
+
+function infohotel(){
+
+    $instancia = Open();
+    $sentencia = "SELECT * FROM tipohabitacion;";
+     $resultado = $instancia -> query($sentencia);
+     Close($instancia);
+    
+    return $resultado; 
+    
+    }
+
 // ...
 ?>

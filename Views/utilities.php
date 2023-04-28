@@ -62,6 +62,7 @@ function display_header(){
             <!-- <li><a href="testimonials.php">Testimonials </a></li> -->
             <!--   <li><a href="services.php">Services</a></li> -->
             <li><a href="mostrarUsuarios.php">Usuarios</a></li>
+            <li><a href="habitaciones.php">Tipos habitaciones</a></li>
            <!-- <li><a href="pricing.php">Pricing</a></li> -->
             <li><a href="ReservasList.php">Reservas</a></li>
             <li><a href="main.php">Habitaciones</a></li>

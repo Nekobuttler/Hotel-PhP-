@@ -168,5 +168,44 @@ function DeleteHabitacion($idHabitacion) {
     }
 }
 
+
+
+function infohoteles(){
+    $result = infohotel();
+
+if($result -> num_rows > 0){
+     While($resultData = mysqli_fetch_array($result)){
+echo'
+
+     <div class="tarjeta" style="margin-top: 20px; display: inline-block;">
+    <div class="titulo">
+
+    </div>
+    <img class="Img3" src="assets/img/hotelRoom.jpg" alt="muestra">';
+
+echo '<p style="display: flex; justify-content:center;">' . $resultData["nombreHabitacion"] . '</p>';
+echo '<p style="display: flex; justify-content:left; margin-left:10px;">' . $resultData["descripcion"] . '</p>';
+echo ' <div class="pie">
+<form action="calificacion.php" method="POST" class="TD"
+    style="flex-wrap: wrap; margin-top: 20px; text-align: center;">
+    <input type="text" name="Lugar" id="Lugar" value="" hidden>
+    <a href="calificacion.php" style=""><button class="btn success"
+            style="color:white;">Reservar</button></a>
+</form>
+</div>
+</div>
+
+';
+}
+
+}else{
+ echo "no se encontro informacion";
+
+}
+
+}
+
+
+
 // ...
 ?>
