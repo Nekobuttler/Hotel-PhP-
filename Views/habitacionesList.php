@@ -1,6 +1,6 @@
 <?php
         include_once 'utilities.php';
-        include_once '../Controllers/ReservasController.php';
+        include_once '../Controllers/habitacionController.php';
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,9 +9,21 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Sailor Bootstrap Template - Index</title>
+
     <meta content="" name="description">
     <meta content="" name="keywords">
+
+
+
+
+
+    <title>
+        Hotel Buena Vista
+    </title>
+
+    <!-- add icon link -->
+    <link rel="icon" href="/assets/img/hotel.png" type="image/x-icon">
+
 
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
@@ -36,23 +48,23 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 
-    <script  src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script defer src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
 </head>
 
 <body>
-   
 
     <?php 
     display_header();
     ?>
-   
+
     <div class="container-fluid d-flex justify-content-center mt-5 pt-5">
-    <div>
-<a href="addReserva.php" class="getstarted">Agregar Reserva</a>
-</div>
+        <div>
+            <a href="addHabitacion.php" class="getstarted">Agregar Habitacion</a>
+
+        </div>
         <section class="col-lg-10 pt-4 pt-lg-0 ">
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
@@ -69,25 +81,20 @@
                     <div class="container-fluid">
                         <div class="row">
 
-                            <table class="table table-hover" id="tblReservas">
+                            <table class="table table-hover" id="tblHabitaciones">
                                 <thead>
                                     <tr>
-                                        <th>Tipo Habitacion </th>
-                                        <th>Cliente </th>
-                                        <th>Empleado</th>
-                                        <th>Tipo Reserva</th>
-                                        <th>Fecha Reserva</th>
-                                        <th>Fecha Ingreso</th>
-                                        <th>Fecha Salida</th>
-                                        <th>Personas</th>
+
+                                        <th>Numero Habitacion</th>
                                         <th>Estado</th>
-                                        <th></th>
+                                        <th>Piso</th>
+                                        <th>Tipo de Habitacion</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                   MostrarReservas();
+                                   MostrarHabitaciones();
                                 ?>
                                 </tbody>
                             </table>
@@ -112,19 +119,22 @@
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="JavaScript/funcionesEliminarHab.js"></script>
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
-
     <script>
     $(document).ready(function() {
-        $('#tblReservas').DataTable({
+        $('#tblHabitaciones').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             }
         });
     });
     </script>
+
 </body>
 
 </html>

@@ -22,6 +22,8 @@ if(session_status() == PHP_SESSION_NONE){
 
 function display_header(){
     echo '
+    
+
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top d-flex align-items-center ">
       <div class="container d-flex align-items-center">
@@ -62,6 +64,7 @@ function display_header(){
             <li><a href="mostrarUsuarios.php">Usuarios</a></li>
            <!-- <li><a href="pricing.php">Pricing</a></li> -->
             <li><a href="ReservasList.php">Reservas</a></li>
+            <li><a href="main.php">Habitaciones</a></li>
             
             
             <!-- <li><a href="contact.php">Contact</a></li> -->
@@ -89,12 +92,12 @@ function display_footer(){
 
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-info">
-                        <h3>Sailor</h3>
+                        <h3>Hotel Buena Vista</h3>
                         <p>
-                            A108 Adam Street <br>
-                            NY 535022, USA<br><br>
-                            <strong>Phone:</strong> +1 5589 55488 55<br>
-                            <strong>Email:</strong> info@example.com<br>
+                            Guanacaste Costa Rica <br>
+                           
+                            <strong>Phone:</strong> +506 8123-2131<br>
+                            <strong>Email:</strong> Mae pongalo porque no me acuerdo cual es hotel@proyecto.com<br>
                         </p>
                         <div class="social-links mt-3">
                             <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -109,11 +112,10 @@ function display_footer(){
                 <div class="col-lg-2 col-md-6 footer-links">
                     <h4>Useful Links</h4>
                     <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="main.php">Home</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Tipos Habitaciones</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="profile2.php">Profile</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="about.php">Acerca de nosotros</a></li>
                     </ul>
                 </div>
 

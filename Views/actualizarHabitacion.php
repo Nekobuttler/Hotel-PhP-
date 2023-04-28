@@ -1,6 +1,7 @@
 <?php
         include_once 'utilities.php';
         include_once '../Controllers/habitacionController.php';
+        $result = detalleHabitacion($_GET["q"]);
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,23 +68,29 @@
                                 <h1 class="h4 text-gray-900 mb-4">Actualizar Datos</h1>
                             </div>
                             <form action="" method="post">
-                                <input type="hidden" name="idHabitacion" value="<?php echo $idHabitacion ?>">
+                                <input type="hidden" name="idHabitacion" value="<?php echo $result["idHabitacion"] ?>">
                                     <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="nHabitacion">Numero Habitacion</label>
-                                        <input type="number" class="form-control" name="nHabitacion" id="nHabitacion" placeholder="Digite el numero de la habitacion" value="<?php echo $numeroHab ?>">
+                                        <input type="number" class="form-control" 
+                                        name="nHabitacion" id="nHabitacion"
+                                         placeholder="Digite el numero de la habitacion" min=1
+                                         value="<?php echo $result["numeroHabitacion"] ?>">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="pisoHab">Piso de la habitacion</label>
-                                        <input type="number" class="form-control" name="pisoHab" id="pisoHab" placeholder="Digite el piso donde se encuentra la habitacion" value="<?php echo $pisoHab ?>">
+                                        <input type="number" class="form-control" 
+                                        value="<?php echo $result["piso"] ?>" max=12 min=0
+                                        name="pisoHab" id="pisoHab" placeholder="Digite el piso donde se encuentra la habitacion" value="<?php echo $pisoHab ?>">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="estadoHab">Estado de la habitacion</label>
-                                        <select id="estadoHab" name ="estadoHab" class="form-control">
+                                        <select id="estadoHab" name ="estadoHab" class="form-control"
+                                        >
                                             <?php
-                                            estadoHabitacion($estadoHabitacion);
+                                            estadoHabitacion($result["estadoHabitacion"]);
                                             ?>
                                         </select>
                                     </div>
@@ -91,7 +98,7 @@
                                         <label for="tipoHab">Tipo de habitacion</label>
                                         <select id="tipoHab" name ="tipoHab" class="form-control">
                                             <?php
-                                            tiposHabitacion($tipoHab);
+                                            tiposHabitacion($result["tipoHabitacion"]);
                                             ?>
                                         </select>
                                      </div>

@@ -2,7 +2,7 @@
 
 function Open()
 {
-    $servidor = "127.0.0.1:3307";
+    $servidor = "127.0.0.1:3308";
     $usuario = "root";
     $contrasenna = "";
     $baseDatos = "hoteldb";

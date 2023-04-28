@@ -1,40 +1,26 @@
+function eliminarReserva(idReserva)
+{   
+    $('#idReserva').val(idReserva);
 
-
-
-pickedDatestr = Date.now();
-var pickedDate = new Date(Date.parse(pickedDatestr.replace(/-/g, " ")))
-
-function controlFechas(){
-
-
-
+    $('#confirmEliminar').modal('show'); 
+   
 }
 
-//Tratar de comparar fechas que haya algun espacio de tiempo entre ellas 
-//Que las fechas sean mayor al dia 'hoy '
 
-$.ajax({
-    url:  '../Controllers/usuariosController.php',
-    type: 'GET',
-    data: { 
-        "VerificarExisteCorreo" : "VerificarExisteCorreo",
-        "correoElectronico" : correoElectronico 
-    },
-    success: function(res) 
-    {
-        if(res == "OK")
+$('#cancelarConfirm').click(function(e){
+    let idReserva = $('#idReserva').val();
+    e.preventDefault();
+    $.ajax({
+        url:  '../Controllers/ReservasController.php',
+        data: { 
+            "desacConfirm" : "desacConfirm",
+            "idReserva" : idReserva 
+        },        
+        type: 'POST',
+        success: function(res) 
         {
-            if (correoElectronico !== "" && contrasenna !== "" && confirmarContrasenna !== "") 
-            {
-                if(contrasenna === confirmarContrasenna)
-                {
-                    $("#btnRegistrarCuenta").prop("disabled", false);
-                }
-            }
+            $('#cardView-'+idReserva).remove(); 
+            $('#confirmEliminar').modal('hide'); 
         }
-        else
-        {
-            alert(res);
-        }
-    }
- });
+     });
+});

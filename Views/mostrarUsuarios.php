@@ -30,10 +30,14 @@
     <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 
+    <script  src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script  src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script  src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
 </head>
 
@@ -63,19 +67,20 @@
                     <div class="container-fluid">
                         <div class="row">
 
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="tblUsuarios">
                                 <thead>
                                     <tr>
-                                        <th>id Cliente</th>
-                                        <th>id Nombre</th>
-                                        <th>Apellido </th>
-                                        <th>email  </th>
+                                        <th>Nombre</th>
+                                        <th>Apellidos</th>
+                                        <th>Correo</th>
                                         <th>Tipo Documento</th>
-                                        <th>Numero Documento </th>
-                                        <th>Telefono</th>
-                                        <th>Direccion</th>
-                                        <th>tipo Usuario</th>
+                                        <th>Número Documento </th>
+                                        <th>Teléfono</th>
+                                        <th>Dirección</th>
+                                        <th>Tipo Usuario</th>
                                         <th>Fecha Nacimiento</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -108,6 +113,16 @@
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $('#tblUsuarios').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+        });
+    });
+    </script>
 
 </body>
 

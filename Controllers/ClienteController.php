@@ -109,7 +109,6 @@ function mostrarClientes($tipoUsuario){
     
         While($resultData = mysqli_fetch_array($result)){
             echo "<tr>";
-            echo "<td>" .  $resultData["id_cliente"]. "</td>";
             echo "<td>" . $resultData["Nombre"] . "</td>";
             echo "<td>" . $resultData["Apellidos"] . "</td>";
             echo "<td>" .  $resultData["email"]. "</td>";
@@ -121,14 +120,14 @@ function mostrarClientes($tipoUsuario){
             echo "<td>" .  $resultData["fecha_nac"]. "</td>";
             echo "<td>" . ' <form method="post">  <input  id="idhabitacion" name="idhabitacion" type="hidden" 
             value="'.$resultData["id_cliente"] .'" /> <input  class="btn btn-danger" id ="delHabitacion" 
-            name="delHabitacion" type ="submit" value="Delete" 
+            name="delHabitacion" type ="submit" value="Eliminar" 
             href="#confirmEliminar" data-backdrop="static" data-keyboard="false" data-toggle="modal"
                     data-target="#confirmEliminar"  
                     
                     onClick=EliminarHab('. $resultData["id_cliente"]  .') /> </form> 
                     '. "</td>";
             echo "<td>"  . '
-            <a href="actualizarReserva.php" class="btn btn-primary">Actualizar</a>' . "</td>";
+            <a href="actualizarUsuario.php?q='.$resultData["id_cliente"].'" class="btn btn-primary">Actualizar</a>' . "</td>";
             echo "</tr>";
            
         }
@@ -214,8 +213,16 @@ function MostrarDatosClienteProfile($id){
     }
 
     
-
 }
 
+
+
+
+
+function cambioRol($idCliente){
+
+
+      
+}
 
 ?>

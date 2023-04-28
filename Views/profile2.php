@@ -72,12 +72,12 @@
                                 <div class="form-group">
                                     <label for="apellidos">Apellidos:</label>
                                     <input type="text" id="apellidos" name="apellidos" class="form-control"
-                                        placeholder="" value="<?php echo $result["Apellidos"]?> " >
+                                        placeholder="" value="<?php echo $result["Apellidos"]?> ">
                                 </div>
                             </div>
 
                             <div class="form-group mb-3 pb-3">
-                                <select id="tipo_doc" name="tipo_doc" required>
+                                <select id="tipo_doc" name="tipo_doc" disabled>
                                     <?php
                                             tipoDocumentos();
                                             ?>
@@ -96,24 +96,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="direccion">Direccion:</label>
-                                <input type="text" id="direccion" name="direccion" class="form-control"
-                                    placeholder="Enter your address" value="<?php echo $result["direcccion"]?>">
-                            </div>
-
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <select class="form-control form-control-user" id="rol" name="rol">
-                                    <?php
-                                                    //VerPerfiles($resultado["TipoUsuario"]);
-                                                ?>
-                                </select>
-                            </div>
-
-
-
-                            <div class="form-group">
                                 <label for="fehca_nac">Fecha Nacimiento:</label>
-                                <input type="date" id="fehca_nac" name="fehca_nac" class="form-control" value="">
+                                <input type="date" id="fehca_nac" name="fehca_nac"
+                                    min=<?php echo date("Y-m-d H:i:s"); ?> class="form-control"
+                                    value=<?php echo $result["fecha_nac"]?>>
 
 
                             </div>
@@ -121,7 +107,7 @@
                             <div class="form-group">
                                 <label for="password">Password:</label>
                                 <input type="password" id="password" name="password" class="form-control"
-                                    placeholder=""> <?php // Aca lo que puede hacerse es que solo se muestren puntitos y que 
+                                    placeholder="************"> <?php // Aca lo que puede hacerse es que solo se muestren puntitos y que 
                                                             //cuando lo presione le pida si esta seguro y de una le pida 
                                                             // la contrasena ?>
                             </div>
@@ -133,13 +119,13 @@
                         <input type="file" id="photo" name="photo" class="form-control-file"> 
                     </div>-->
                             <input id="actCliente" name="actCliente" class="btn btn-primary" type="submit"
-                                value="Save Changes" />
+                                value="Actualizar" />
                         </form>
-                        <div class="delete mt-3">
+                        <!-- <div class="delete mt-3">
                             <input class="btn btn-danger" id="delCliente" type="submit" value="Delete"
                                 href='#confirmEliminar' data-backdrop='static' data-keyboard='false' data-toggle='modal'
                                 data-target='#confirmEliminar' />
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -153,7 +139,7 @@
                         <div class="card-deck">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <?php reservasClientes($_SESSION["id"]); //$_GET["q"] ?>
+                                    <?php reservasClientesClient($_SESSION["id"]); //$_GET["q"] ?>
                                 </div>
                             </div>
                         </div>
@@ -175,27 +161,67 @@
                     <button type="button" class="X lg" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p> Quiere desactivar el siguiente usuario? </p>
-
-                    <input type="hidden" id="consecutivo" name="consecutivo">
-
-                    <p id="nombreUser" name="nombreUser"></p>
+                    <p> Quiere cancelar este presente reserva? </p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" name="desacConfirm" id="desacConfirm" data-bs-target=""
-                        data-bs-toggle="modal" data-dismiss="modal" onclick="desacConfirm">Confirmar
-                        Desactivacion</button>
-
-                    <button class="btn btn-primary" data-bs-target="" data-bs-toggle="modal"
-                        data-dismiss="modal">Cancelar</button>
+                    <form action="" method="post">
+                        <input type="hidden" id="idReserva" name="idReserva">
+                        <button class="btn btn-primary" data-bs-target="" data-bs-toggle="modal" data-dismiss="modal">Cancelar</button>
+                        <input class="btn btn-danger" name="cancelarConfirm" id="cancelarConfirm" type="submit" value="Eliminar Reserva">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <div class="modal fade" id="modalForm" name="modalForm" tabindex="-1" role="dialog"
+        aria-labelledby="ActualizarReserva" data-keybord="false" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Write to us</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <input type="text" id="form34" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="form34">Your name</label>
+                    </div>
+
+                    <div class="md-form mb-5">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <input type="email" id="form29" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="form29">Your email</label>
+                    </div>
+
+                    <div class="md-form mb-5">
+                        <i class="fas fa-tag prefix grey-text"></i>
+                        <input type="text" id="form32" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="form32">Subject</label>
+                    </div>
+
+                    <div class="md-form">
+                        <i class="fas fa-pencil prefix grey-text"></i>
+                        <textarea type="text" id="form8" class="md-textarea form-control" rows="4"></textarea>
+                        <label data-error="wrong" data-success="right" for="form8">Your message</label>
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-unique">Send <i class="fas fa-paper-plane-o ml-1"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+    <script src="JavaScript/ReservasFunctions.js"></script>
 </body>
 
 </html>

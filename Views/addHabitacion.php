@@ -83,7 +83,7 @@
                                         <label for="estadoHab">Estado de la habitacion</label>
                                         <select id="estadoHab" name ="estadoHab"class="form-control">
                                         <?php
-                                           	estadoHabitacion();
+                                           	estadoHabitacion("");
                                            ?>
                                         </select>
                                     </div>
@@ -91,7 +91,7 @@
                                         <label for="tipoHab">Tipo de habitacion</label>
                                         <select id="tipoHab" name ="tipoHab" class="form-control">
                                            <?php
-                                           	tiposHabitacion();
+                                           	tiposHabitacion("");
                                            ?>
                                         </select>
                                     </div>

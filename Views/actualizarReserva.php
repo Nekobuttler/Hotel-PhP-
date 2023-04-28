@@ -1,6 +1,8 @@
 <?php
         include_once 'utilities.php';
+        include_once '../Controllers/ReservasController.php';
         include_once '../Controllers/habitacionController.php';
+        $result = mostrarDatosReserva($_GET["q"]);
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,39 +69,70 @@
                                 <h1 class="h4 text-gray-900 mb-4">Actualizar Reserva</h1>
                             </div>
                             <form action="" method="post">
-                                <input type="hidden" name="idReserva" value="<?php echo $idReserva ?>">
+                                <input type="hidden" name="idReserva" value="<?php echo $result["idReserva"] ?>">
                                     <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="nReserva">ID Reserva</label>
-                                        <input type="number" class="form-control" name="nReserva" id="nReserva" placeholder="Digite el numero de reserva" value="<?php echo $idReserva ?>">
-                                    </div>
+                                    <input type="hidden" id="idReserva" name="idReserva" value="<?php echo $result["idReserva"] ?>">
                                     <div class="form-group col-md-6">
                                         <label for="fechaIng">Fecha de ingreso</label>
-                                        <input type="number" class="form-control" name="fechaIng" id="fechaIng" placeholder="Digite la fecha de ingreso" value="<?php echo $fechaIng ?>">
+                                        <input type="date" class="form-control"
+                                        value=<?php echo $result["fecha_ingreso"]?>
+                                         name="fechaIng" id="fechaIng" 
+                                         placeholder="Digite la fecha de ingreso" 
+                                         min=<?php echo date("Y-m-d H:i:s"); ?>
+                                         >
                                     </div>
+
                                     <div class="form-group col-md-6">
                                         <label for="fechaReser">Fecha de reserva</label>
-                                        <input type="number" class="form-control" name="fechaReser" id="fechaReser" placeholder="Digite la fecha de reservación" value="<?php echo $fechaReser ?>">
+                                        <input type="date" class="form-control" 
+                                        name="fechaReser" id="fechaReser" disabled
+                                        placeholder="Digite la fecha de reservación"
+                                        value=<?php echo $result["fecha_reserva"]?>>
                                     </div>
+                                    
                                     <div class="form-group col-md-6">
                                         <label for="fechaSal">Fecha de salida</label>
-                                        <input type="number" class="form-control" name="fechaSal" id="fechaSal" placeholder="Digite la fecha de salida" value="<?php echo $fechaSal ?>">
+                                        <input type="date" class="form-control" 
+                                        name="fechaSal" id="fechaSal"
+                                         placeholder="Digite la fecha de salida"
+                                         value=<?php echo $result["fecha_salida"]?> 
+                                         >
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="idCliente">ID Cliente</label>
-                                        <input type="number" class="form-control" name="idCliente" id="idCliente" placeholder="Digite el id del cliente" value="<?php echo $idCliente ?>">
+                                        <label for="idCliente">Cliente</label>
+                                        <input type="text" class="form-control"
+                                         name="idCliente" id="idCliente" 
+                                         placeholder=<?php echo $result["NombreCliente"]?>
+                                         value= <?php echo $result["idCliente"]?>
+                                         readonly>
+
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="idEmpleado">ID Empleado</label>
-                                        <input type="number" class="form-control" name="idEmpleado" id="idEmpleado" placeholder="Digite el id del empleado" value="<?php echo $idEmpleado ?>">
+                                        <label for="idEmpleado">Empleado</label>
+                                        <input type="number" class="form-control" 
+                                        name="idEmpleado" id="idEmpleado" 
+                                        placeholder=<?php echo $result["NombreEmpleado"]?>
+                                        value=<?php echo $result["idEmpleado"]?>
+                                        readonly
+                                    
+                                        >
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="idHabitacion">ID Habitacion</label>
-                                        <input type="number" class="form-control" name="idHabitacion" id="idHabitacion" placeholder="Digite el id de habitación" value="<?php echo $idHabitacion ?>">
+                                        <label for="idHabitacion">Habitacion</label>
+                                        <select id="idHabitacion" name ="idHabitacion" class="form-control">
+                                            <?php
+                                            listaHabitaciones();
+                                            ?>
+                                        </select>
+                                         
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="numeroPersonas">Número de Personas</label>
-                                        <input type="number" class="form-control" name="numeroPersonas" id="numeroPersonas" placeholder="Digite el número de personas" value="<?php echo $numeroPersonas ?>">
+                                        <input type="number" 
+                                        class="form-control" name="numeroPersonas"
+                                         id="numeroPersonas" placeholder="Digite el número de personas" 
+                                         value=<?php echo $result["numeroPersonas"]?> min=1
+                                         >
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -107,7 +140,7 @@
                                         <label for="tipoReserva">Tipo de reserva</label>
                                         <select id="tipoReserva" name ="tipoReserva" class="form-control">
                                             <?php
-                                            tiposReservas($tipoReserva);
+                                            tiposReservas();
                                             ?>
                                         </select>
                                      </div>

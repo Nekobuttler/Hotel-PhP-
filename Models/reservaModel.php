@@ -76,7 +76,7 @@ function showEmpleados(){
 }
 
 
-
+//Para empleados 
 function mostrarReservaPorCliente($idCliente){
     $instancia = Open();
 
@@ -88,25 +88,50 @@ function mostrarReservaPorCliente($idCliente){
    return $resultado; 
 }
 
-function ActualizarReservaModel($idReserva, $fechIng, $fechaReser, $fechaSal, $idCliente, $idEmpleado, $idHabitacion, $numeroPersonas, $tipoReserva)
+
+//Para clientes 
+function mostrarReservaPorClienteClient($idCliente){
+    $instancia = Open();
+
+   $sentencia = "CALL mostrarReservasCliente('$idCliente')";
+
+   $resultado = $instancia -> query($sentencia);
+
+   Close($instancia);
+   return $resultado; 
+}
+
+
+
+function ActualizarReservaModel($idReserva ,$idHab, $pidCliente,$idEmpleado,$tipoReserva,$fechaIngreso ,$fechaSal,
+                                $numeroPersonas, $estadoReserva)
 { 
     $enlace = Open();
 
-    $procedimiento = "call ActualizarReserva($idReserva, '$fechIng', '$fechaReser', '$fechaSal', $idCliente, $idEmpleado, $idHabitacion, '$numeroPersonas', $tipoReserva);";
+    $procedimiento = "call actualizarReserva($idReserva,'$idHab', 
+                        '$pidCliente', '$idEmpleado', $tipoReserva, $fechaIngreso, $fechaSal, 
+                        '$numeroPersonas', $estadoReserva);";
     $enlace -> query($procedimiento);
 
     Close($enlace);
 }
 
-function deleteReservaModel($idReserva) {
+function cancelarReservaModel($idReserva) {
     $instancia = Open();
-    $sentencia = "CALL deleteReserva($idReserva);";
+    $sentencia = "CALL cancelarReserva($idReserva);";
+    $instancia->query($sentencia);
+    Close($instancia);
+    
+}
+
+function reservaDetalleModel($idReserva){
+
+    $instancia = Open();
+    $sentencia = "CALL reservaDetalle($idReserva);";
     $resultado = $instancia->query($sentencia);
     Close($instancia);
     return $resultado;
 }
-
-
 
 
 ?>

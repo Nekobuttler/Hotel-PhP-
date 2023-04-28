@@ -2,6 +2,11 @@
 <?php 
 include_once '../Models/reservaModel.php';
 
+if(session_status() == PHP_SESSION_NONE)
+{
+    session_start();
+}
+
 
 
 if(isset($_POST["btnGuardarRes"])){
@@ -43,18 +48,19 @@ if($result -> num_rows > 0){
 
     While($resultData = mysqli_fetch_array($result)){
         echo "<tr>";
-        echo "<td>" .  $resultData["idReserva"]. "</td>";
-        echo "<td>" . $resultData["fecha_ingreso"] . "</td>";
-        echo "<td>" . $resultData["fecha_reserva"] . "</td>";
+        echo "<td>" . $resultData["nombreHabitacion"] . "</td>";
+        echo "<td>" . $resultData["NombreCliente"] . "</td>";
+        echo "<td>" .  $resultData["NombreEmpleado"]. "</td>";
+        echo "<td>" .  $resultData["descripcion"]. "</td>";
+        echo "<td>" .  $resultData["fecha_reserva"]. "</td>";
+        echo "<td>" .  $resultData["fecha_ingreso"]. "</td>";
         echo "<td>" .  $resultData["fecha_salida"]. "</td>";
-        echo "<td>" .  $resultData["idCliente"]. "</td>";
-        echo "<td>" .  $resultData["idEmpleado"]. "</td>";
-        echo "<td>" .  $resultData["idHabitacion"]. "</td>";
         echo "<td>" .  $resultData["numeroPersonas"]. "</td>";
-        echo "<td>" .  $resultData["tipoReserva"]. "</td>";
+        echo "<td>" .  $resultData["nombreEstado"]. "</td>";
+        
         echo "<td>" . ' <form method="post">  <input  id="idReserva" name="idReserva" type="hidden" 
         value="'.$resultData["idReserva"] .'" /> <input  class="btn btn-danger" id ="delReserva" 
-        name="delReserva" type ="submit" value="Delete" 
+        name="delReserva" type ="submit" value="Eliminar" 
         href="#confirmEliminar" data-backdrop="static" data-keyboard="false" data-toggle="modal"
                 data-target="#confirmEliminar"  
                 
@@ -154,7 +160,7 @@ function reservasClientes($idCliente){
 
     
 
-    $result = mostrarReservaPorCliente($idCliente);
+    $result = mostrarReservaPorCliente($idCliente);   
 
     if($result -> num_rows > 0){
     //$resultData = mysqli_fetch_array($result);
@@ -162,21 +168,32 @@ function reservasClientes($idCliente){
     While($resultData = mysqli_fetch_array($result)){
 
         echo'
-        <div class="card">
-          <img  class="img-fluid"
-          src="assets/img/hotelRoom.jpg" class="card-img-top" alt="600"  width="400" height="600">
-          <div class="card-body">
-            <h5 class="card-title"> ' .$resultData["descripcion"] .  '</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <div class="card" style="width: 18rem;">
+        
+        <a href="DetallesReserva.php?q='.$resultData["idReserva"].'"> <img  class="img-fluid"
+          src="assets/img/hotelRoom.jpg" class="card-img-top" alt="600"  width="400" height="600"></a>
+          <div class="card-body" > 
+         
+          <h5 class="card-title" > ' .$resultData["descripcion"] .  '</h5>
+          
+            <p class="card-text"></p>
             <p> Fecha realizada: ' . $resultData["fecha_reserva"] . ' </p>
             <p> Fecha de llegada: ' . $resultData["fecha_ingreso"] . ' </p>
             <p> Fecha de salida: ' . $resultData["fecha_salida"] . ' </p>
             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            
+            <div> 
             <a href="#" class="btn btn-primary"> Actualizar </a>
+
             <a href="#confirmEliminar"  data-backdrop="static" 
             data-keyboard="false" data-toggle="modal" data-target="#confirmEliminar" 
             data-id="' . $resultData["idReserva"] . '" 
-            class="btn btn-danger"> Eliminar </a>
+        class="btn btn-danger"> Eliminar </a>
+
+        
+        </div>
+     </div>
+
                 </div>
        ';
     }
@@ -194,46 +211,183 @@ data-id="' . $resultData["idReserva"] . '> Eliminar </a>*/
 
 }
 
-function actualizarReserva($idReserva, $fechIng, $fechaReser, $fechaSal, $idCliente, $idEmpleado, $idHabitacion, $numeroPersonas, $tipoReserva) {
-    $resultado = actualizarHabitacionModel($idReserva, $fechIng, $fechaReser, $fechaSal, $idCliente, $idEmpleado, $idHabitacion, $numeroPersonas, $tipoReserva);
+function reservasClientesClient($idCliente){
 
-    if ($resultado == true) {
-        header("location: ../Views/main.php");
-    } else {
-        header("location:../Views/addHabitacion.php");
+    
+
+    $result = mostrarReservaPorClienteClient($idCliente);   
+
+    if($result -> num_rows > 0){
+    //$resultData = mysqli_fetch_array($result);
+
+    While($resultData = mysqli_fetch_array($result)){
+
+        echo"
+        <div class='card' style='width: 18rem;' id='cardView-" . $resultData["idReserva"] . "'>
+        
+        <a href='DetallesReserva.php?q=".$resultData["idReserva"]."'> <img  class='img-fluid'
+          src='assets/img/hotelRoom.jpg' class='card-img-top' alt='600'  width='400' height='600'></a>
+          <div class='card-body' > 
+         
+          <h5 class='card-title' > " .$resultData["descripcion"] .  "</h5>
+          
+            <p class='card-text'></p>
+            <p> Fecha realizada: " . $resultData["fecha_reserva"] . " </p>
+            <p> Fecha de llegada: " . $resultData["fecha_ingreso"] . " </p>
+            <p> Fecha de salida: " . $resultData["fecha_salida"] . " </p>
+            <p class='card-text'><small class='text-muted'>Last updated 3 mins ago</small></p>
+            
+            <div> 
+            <a href='#' class='btn btn-primary'> Actualizar </a>
+
+            <a  href='#' data-id='" . $resultData["idReserva"] . "' class='btn btn-danger' onclick='eliminarReserva(" . $resultData["idReserva"] . ");'> Eliminar </a>
+
+        
+        </div>
+     </div>
+
+                </div>
+       ";
+    }
+/*<a href="#confirmEliminar" data-backdrop="static" data-keyboard="false" data-toggle="modal"
+data-target="#confirmEliminar"  class="btn btn-danger"
+data-id="' . $resultData["idReserva"] . '> Eliminar </a>*/
+
+    }else{
+            echo '<p>You don' ."'". 't have any bookings yet.</p> ';
+    }
+
+    $result = MostrarReservasModel();
+
+    
+
+}
+
+
+
+function  ActualizarReserva($idReserva,$idHab, $pidCliente,$idEmpleado,
+                                $tipoReserva,$fechaIngreso ,$fechaSal, 
+                                $numeroPersonas, $estadoReserva) 
+{
+
+     ActualizarReservaModel($idReserva,$idHab, $pidCliente, 
+    $idEmpleado, $tipoReserva, $fechaIngreso, $fechaSal, $numeroPersonas, $estadoReserva);
+
+    
+    
+    
+}
+
+
+function reservasDetalle($idReserva){
+
+    $result = reservaDetalleModel($idReserva);   
+
+    if($result -> num_rows > 0){
+    //$resultData = mysqli_fetch_array($result);
+
+    While($resultData = mysqli_fetch_array($result)){
+
+        echo'
+        <div class="card" style="width: 18rem;">
+        
+        <a href="DetallesReserva.php?q='.$resultData["idReserva"].'"> <img  class="img-fluid"
+          src="assets/img/hotelRoom.jpg" class="card-img-top" alt="600"  width="400" height="600"></a>
+          <div class="card-body" > 
+         
+          <h5 class="card-title" > ' .$resultData["descripcion"] .  '</h5>
+          
+            <p class="card-text"></p>
+            <p> Fecha realizada: ' . $resultData["fecha_reserva"] . ' </p>
+            <p> Fecha de llegada: ' . $resultData["fecha_ingreso"] . ' </p>
+            <p> Fecha de salida: ' . $resultData["fecha_salida"] . ' </p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            
+            <div> 
+            <a href="#modalForm" class="btn btn-primary"  
+            data-backdrop="static" 
+            data-keyboard="false" data-toggle="modal" data-target="#modalForm" 
+            data-id="' . $resultData["idReserva"] . '" 
+            > Actualizar </a>
+
+            <a href="#confirmEliminar"  data-backdrop="static" 
+            data-keyboard="false" data-toggle="modal" data-target="#confirmEliminar" 
+            data-id="' . $resultData["idReserva"] . '" 
+        class="btn btn-danger"> Eliminar </a>
+
+        
+        </div>
+     </div>
+
+                </div>
+       ';
+    }
+/*<a href="#confirmEliminar" data-backdrop="static" data-keyboard="false" data-toggle="modal"
+data-target="#confirmEliminar"  class="btn btn-danger"
+data-id="' . $resultData["idReserva"] . '> Eliminar </a>*/
+
+    }else{
+            echo '<p>You don' ."'". 't have any bookings yet.</p> ';
+    }
+
+    $result = MostrarReservasModel();
+
+    
+
+}
+
+
+if(isset($_POST["btnActualizarReserva"])){
+    
+    if( $_SESSION["privilegios"] == 2 ){
+    $idReserva =  $_POST["idReserva"];
+    $idHab = $_POST["idHabitacion"]; 
+    $idCliente = $_SESSION["id"];
+    $idEmpleado = $_POST["idEmpleado"]; 
+    $tipoReserva = $_POST["tipoReserva"]; 
+    $fechaIngreso = $_POST["fechaIng"];
+    $fechaSal = $_POST["fechaSal"];
+    $numeroPersonas = $_POST["numeroPersonas"];
+    $estadoReserva = 2;
+
+    ActualizarReserva($idReserva,$idHab, $idCliente,$idEmpleado,
+    $tipoReserva,$fechaIngreso ,$fechaSal, 
+    $numeroPersonas, $estadoReserva);
+
+        
+    }else{
+
     }
 }
 
 
 
-if(isset($_POST["delHabitacion"])){
+if(isset($_POST["desacConfirm"])){
 
-    $nHabitacion = $_POST["idhabitacion"];
-    DeleteHabitacion($nHabitacion);
-
+    $idReserva =  $_POST["idReserva"];
+    cancelarReservaModel($idReserva);
 }
 
 
-
-
-
-
-function DeleteHabitacion($idHabitacion) {
-    $resultado = DeleteHabitacionModel($idHabitacion);
-
-    if ($resultado == true) {
-        header("location: ../Views/main.php");
-    } else {
-        header("location:../Views/addHabitacion.php");
-    }
-}
-
-//Conectar al model y realizar consulta
-function mostrarDatosReserva(){
+function cancelarReserva($idReserva) {
+    
+    cancelarReservaModel($idReserva);
 
 
 }
+function mostrarDatosReserva($idReserva){
 
+    $result = reservaDetalleModel($idReserva);
+
+    if($result -> num_rows > 0){
+         $result = mysqli_fetch_array($result);
+
+        return $result;
+    
+}else{
+    echo'No se encontraron datos';
+}
+}
 
 
 

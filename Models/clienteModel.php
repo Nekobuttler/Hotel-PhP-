@@ -154,6 +154,20 @@ function MostrarDatosClienteModel($id){
 
 }
 
+function cambioRol($idCliente){
+
+    
+    $instancia = Open();
+
+    $sentencia = "CALL cambioRol('$idCliente')";
+    
+    $result = $instancia -> query($sentencia);
+
+    Close($instancia);
+
+    return $result;
+}
+
 
 
 
